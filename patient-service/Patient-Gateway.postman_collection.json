@@ -1,0 +1,49 @@
+{
+  "info": {
+    "name": "Patient Gateway API",
+    "_postman_id": "d6c3f16d-45d0-4b91-9c12-55c93d8f822f",
+    "description": "Collection for testing Python FastAPI Gateway → Spring Boot Patient Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Patient",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice Smith\",\n  \"age\": 32,\n  \"contact\": \"9876543210\",\n  \"diagnosis\": \"Fever\",\n  \"prescription\": \"Paracetamol 500mg\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/patients",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["patients"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Patient by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/patients/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["patients", "1"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
