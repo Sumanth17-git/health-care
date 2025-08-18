@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-gateway
+  labels:
+    app: python-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-gateway
+  template:
+    metadata:
+      labels:
+        app: python-gateway
+    spec:
+      containers:
+        - name: python-gateway
+          image: sumanth17121988/pythongateway:1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SPRINGBOOT_URL
+              value: "http://patient-service-lb:9090"   # external Spring Boot service
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-gateway
+  labels:
+    app: python-gateway
+spec:
+  type: LoadBalancer    # will provision GCP/AWS ELB with external IP
+  selector:
+    app: python-gateway
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+

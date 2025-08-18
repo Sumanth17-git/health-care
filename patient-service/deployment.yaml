@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patient-service
+  labels:
+    app: patient-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: patient-service
+  template:
+    metadata:
+      labels:
+        app: patient-service
+    spec:
+      containers:
+        - name: patient-service
+          image: sumanth17121988/patient-service:1  # <-- replace with your pushed Docker image
+          ports:
+            - containerPort: 9090
+          env:
+            - name: SPRING_APPLICATION_NAME
+              value: patient-service
+            - name: SERVER_PORT
+              value: "9090"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://35.239.2.125:5432/healthcare   # <-- use your Postgres host/db
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: admin@123
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: patient-service-lb
+  labels:
+    app: patient-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: patient-service
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+
