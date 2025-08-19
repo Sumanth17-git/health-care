@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthcare-frontend
+  labels:
+    app: healthcare-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthcare-frontend
+  template:
+    metadata:
+      labels:
+        app: healthcare-frontend
+    spec:
+      containers:
+        - name: healthcare-frontend
+          image: sumanth17121988/react-healthcare:1
+          ports:
+            - containerPort: 80
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://python-gateway:8000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthcare-frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: healthcare-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+

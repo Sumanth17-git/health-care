@@ -25,7 +25,7 @@ spec:
             - name: SERVER_PORT
               value: "9090"
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://35.239.2.125:5432/healthcare   # <-- use your Postgres host/db
+              value: jdbc:postgresql://34.21.75.253:5432/healthcare   # <-- use your Postgres host/db
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
             - name: SPRING_DATASOURCE_PASSWORD

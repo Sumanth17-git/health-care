@@ -1,10 +1,18 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import os
 
 app = FastAPI()
-
-SPRINGBOOT_URL = os.getenv("SPRINGBOOT_URL", "http://34.46.44.251:9090")
+# ✅ Allow React frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # you can later restrict to ["http://34.21.75.253:3000"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+SPRINGBOOT_URL = os.getenv("SPRINGBOOT_URL", "http://34.10.142.226:9090")
 
 @app.post("/patients")
 async def create_patient(patient: dict):
